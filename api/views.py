@@ -12,7 +12,7 @@ class MealViewsets(viewsets.ModelViewSet):
     queryset = Meal.objects.all()
     serializer_class = MealSerializer
     
-    @action(method='POST',detail=True)
+    @action(methods='POST',detail=True)
     def rate_meal(self, REQUEST, pk=None):
         if 'stars' in request.data:
             '''create or update'''
