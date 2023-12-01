@@ -5,7 +5,8 @@ from .serializers import MealSerializer, RatingSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import AllowAny , IsAuthenticated , IsAdminUser , IsAuthenticatedOrReadOnly
 
 # Create your views here.
 class MealViewsets(viewsets.ModelViewSet):
@@ -56,3 +57,18 @@ class MealViewsets(viewsets.ModelViewSet):
 class RatingViewsets(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+    
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAuthenticated)
+    
+    def update(self, request, *args, **kwargs):
+        response = {
+            'message':'this is not how u should update rating'
+        }
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    
+    def create(self, request, *args, **kwargs):
+        response = {
+            'message':'this is not how u should create rating'
+        }
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
